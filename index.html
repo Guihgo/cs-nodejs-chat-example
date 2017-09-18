@@ -19,16 +19,18 @@
 	</style>
 
 	<script type="text/javascript">
-		document.documentElement.requestFullscreen();
+  try {
+    document.documentElement.requestFullscreen();
+  } catch (e) {
+    console.log(e);
+  }
+
 		var clsMsgs;
-
 		$(document).ready(function(){
-
 			var socket = io.connect(); //conecta ao servidor socket
 			var messageForm = $('#messageForm');
 			var message = $('#message');
 			var chat = $('#chat');
-
 			messageForm.submit(function(e){
 				e.preventDefault();
 				// socket.emit('msgEnviada', message.val() ); //falha de segurança: js inject
@@ -36,23 +38,17 @@
 				console.log('Mensagem enviada');
 				message.val('');
 			});
-
 			socket.on('postMsg', function(data) {
 				chat.append("<div class='alert alert-info'>"+data.msg+"</div>")
 			});
-
 			socket.on('nUsersOnline', function(data) {
 				$('#nUsersOnline').html(data.nUsersOnline);
 			});
-
 			//Limpa msgs
 			clsMsgs = function() {
 				socket.emit('clsMsgs', '');
 			}
-
 		});
-
-
     </script>
 
 </head>
