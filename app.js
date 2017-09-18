@@ -10,7 +10,7 @@ var path = require('path');
 var app = express();
 var server = require('http').createServer(app); //cria servidor http utilizando express como intermediador
 
-server.listen(80); //inicia servidor http na porta 80
+server.listen(process.env.PORT || 80); //inicia servidor http na porta 80
 var socketIo = io.listen(server); //inicia servidor socket utilizando o servidor http criado
 console.log('Server http e socket rodando...');
 
