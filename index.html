@@ -1,0 +1,87 @@
+<HTML>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CookingScript - NodeJs CHAT</title>
+
+	<script src="./jquery/jquery.min.js"></script>
+	<link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
+
+	<script src="/socket.io/socket.io.js"></script>
+
+	<style>
+		body{
+			margin-top: 50px;
+		}
+	</style>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			var socket = io.connect(); //conecta ao servidor socket
+			var messageForm = $('#messageForm');
+			var message = $('#message');
+			var chat = $('#chat');
+
+			messageForm.submit(function(e){
+				e.preventDefault();
+				socket.emit('msgEnviada', message.val());
+				console.log('Mensagem enviada');
+				message.val('');
+			});
+
+			socket.on('postMsg', function(data) {
+				chat.append("<div class='alert alert-info'>"+data.msg+"</div>")
+			});
+
+			socket.on('nUsersOnline', function(data) {
+				$('#nUsersOnline').html(data.nUsersOnline);
+			});
+
+		});
+
+
+    </script>
+
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-8">
+				<div class="chat" id="chat">
+					<form id="messageForm">
+						<div class="form-group">
+							<label>Mete a mensagem aí:</label>
+							<form>
+								<input type="text" class="form-control" name="" value="" id="message"></input>
+								<br />
+								<input type="submit" class="btn btn-primary" style="width:100%" value="Enviar mensagem" />
+							</form>
+							<br />
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="well">
+					<h3>CookingScript() {
+						<br><br>
+					  /*Simples exemplo de WebChat usando NodeJs e SocketIO*/
+						<br><br>
+					}</h3>
+					<h3>Usuários Online: <span id="nUsersOnline"></span></h3>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+
+</body>
+</HTML>
