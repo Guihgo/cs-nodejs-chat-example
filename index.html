@@ -17,6 +17,7 @@
 
 	<script type="text/javascript">
 		var clsMsgs;
+
 		$(document).ready(function(){
 
 			var socket = io.connect(); //conecta ao servidor socket
@@ -26,7 +27,8 @@
 
 			messageForm.submit(function(e){
 				e.preventDefault();
-				socket.emit('msgEnviada', message.val());
+				// socket.emit('msgEnviada', message.val() ); //falha de segurança: js inject
+				socket.emit('msgEnviada',  (message.val().replace(/</g, "&lt;").replace(/>/g, "&gt;")));
 				console.log('Mensagem enviada');
 				message.val('');
 			});
