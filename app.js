@@ -45,11 +45,16 @@ socketIo.sockets.on('connection', function(socket){ //quando houver uma nova con
 		socketIo.sockets.emit('nUsersOnline', {nUsersOnline: connections.length});
 	});
 
-	//Quando receber uma mensagem
-	socket.on('msgEnviada', function(data) { //quando receber uma mensagem
+	 //Quando receber uma mensagem
+	socket.on('msgEnviada', function(data) {
 		console.log(data);
 		msgs.push(data); //guarda msg no array
 		socketIo.sockets.emit('postMsg', {msg: data}); //envia para todos sockets abertos a mensagem que acabou de ser recebida
+	});
+
+	//Quando receber clsMsgs
+	socket.on('clsMsgs', function(data) {
+		msgs = [];
 	});
 
 });

@@ -16,6 +16,7 @@
 	</style>
 
 	<script type="text/javascript">
+		var clsMsgs;
 		$(document).ready(function(){
 
 			var socket = io.connect(); //conecta ao servidor socket
@@ -37,6 +38,11 @@
 			socket.on('nUsersOnline', function(data) {
 				$('#nUsersOnline').html(data.nUsersOnline);
 			});
+
+			//Limpa msgs
+			clsMsgs = function() {
+				socket.emit('clsMsgs', '');
+			}
 
 		});
 
